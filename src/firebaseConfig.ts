@@ -37,7 +37,7 @@ const registerServiceWorker = async () => {
 
       // manually register service worker if not already registered
       const newRegistration = await navigator.serviceWorker.register(
-         "/firebase-messaging-sw.js" // name of the firebase service worker file in your public directory
+         "/firebase-messaging-sw.js" 
       );
       console.log("service worker registered", newRegistration);
       await navigator.serviceWorker.ready;
@@ -52,11 +52,11 @@ export const requestFcmToken = async () => {
    const hasPermission = await requestPermission();
    if (!hasPermission) return null;
 
+   const registration = await registerServiceWorker();
+   if (!registration) return null;
+
    // notification permssion must be granted before getting FCM token
    try {
-      const registration = await registerServiceWorker();
-      if (!registration) return null;
-
       const token = await getToken(messaging, {
          vapidKey:
             "BG73dq-cpSGRs1oAezHTae4ftxhC1Z87XZGxWS1oukzCs5aD28Wrogg3OXl-QvAz-2eHaIAhTe1bSDRm5DU5ILE",
